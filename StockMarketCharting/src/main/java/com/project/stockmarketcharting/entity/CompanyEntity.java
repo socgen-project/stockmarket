@@ -8,8 +8,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 @Entity
@@ -28,9 +28,12 @@ public class CompanyEntity {
 	@OneToMany(mappedBy = "company", cascade = CascadeType.ALL)
 	private List<Director> directors;
 
-	@OneToOne(cascade = CascadeType.ALL)
-	private Sector sector;
+	@ManyToOne(cascade = CascadeType.ALL)
+	private SectorEntity sector;
 	private String description;
+
+//	@ManyToMany(cascade = CascadeType.ALL)
+//	private List<StockExchangeEntity> stockExchanges;
 
 	public long getId() {
 		return id;
@@ -72,11 +75,11 @@ public class CompanyEntity {
 		this.directors = directors;
 	}
 
-	public Sector getSector() {
+	public SectorEntity getSector() {
 		return sector;
 	}
 
-	public void setSector(Sector sector) {
+	public void setSector(SectorEntity sector) {
 		this.sector = sector;
 	}
 

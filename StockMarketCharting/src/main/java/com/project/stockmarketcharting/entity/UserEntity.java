@@ -22,12 +22,13 @@ public class UserEntity implements UserDetails {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private long id;
+	private String name;
 	private String username;
 	private String password;
 	private String userType;
 	private String email;
 	private String mobileNumber;
-	private Boolean confirmed;
+	private Boolean confirmed = true;
 
 	public long getId() {
 		return id;
@@ -87,14 +88,16 @@ public class UserEntity implements UserDetails {
 		this.confirmed = confirmed;
 	}
 
-	public UserEntity() {
-		super();
+	public String getName() {
+		return name;
 	}
 
-	@Override
-	public String toString() {
-		return "UserEntity [id=" + id + ", username=" + username + ", password=" + password + ", userType=" + userType
-				+ ", email=" + email + ", mobileNumber=" + mobileNumber + ", confirmed=" + confirmed + "]";
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public UserEntity() {
+		super();
 	}
 
 	@Override

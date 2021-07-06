@@ -3,6 +3,7 @@ package com.project.stockmarketcharting.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -23,10 +24,14 @@ public class UserController {
 	@Autowired
 	UserService userService;
 
+	@Autowired
+	BCryptPasswordEncoder passwordEncoder;
+
 	@PostMapping("/")
 	public ResponseEntity<?> createUser(@RequestBody UserEntity user) throws Exception {
 		try {
 			user.setUserType("NORMAL");
+			user.setPassword(passwordEncoder.encode(user.getPassword()));
 			UserEntity createUser = userService.createUser(user);
 			return ResponseEntity.ok().body(createUser);
 

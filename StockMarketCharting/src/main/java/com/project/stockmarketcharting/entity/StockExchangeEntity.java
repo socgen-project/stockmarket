@@ -1,14 +1,16 @@
 package com.project.stockmarketcharting.entity;
 
-import javax.persistence.Entity;
+import java.util.List;
+
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
-@Entity
+//@Entity
 @Table(name = "stock_exchange")
-public class StockExchengeEntity {
+public class StockExchangeEntity {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
@@ -16,7 +18,9 @@ public class StockExchengeEntity {
 	private String stockExchange;
 	private String brief;
 	private String contactAddress;
-	private String remarks;
+
+	@ManyToMany()
+	private List<CompanyEntity> companies;
 
 	public long getId() {
 		return id;
@@ -50,22 +54,8 @@ public class StockExchengeEntity {
 		this.contactAddress = contactAddress;
 	}
 
-	public String getRemarks() {
-		return remarks;
-	}
-
-	public void setRemarks(String remarks) {
-		this.remarks = remarks;
-	}
-
-	public StockExchengeEntity() {
+	public StockExchangeEntity() {
 		super();
-	}
-
-	@Override
-	public String toString() {
-		return "StockExchengeEntity [id=" + id + ", stockExchange=" + stockExchange + ", Brief=" + brief
-				+ ", contactAddress=" + contactAddress + ", Remarks=" + remarks + "]";
 	}
 
 }

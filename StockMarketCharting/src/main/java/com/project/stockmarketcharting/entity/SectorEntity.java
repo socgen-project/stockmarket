@@ -1,13 +1,19 @@
 package com.project.stockmarketcharting.entity;
 
+import java.util.List;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
-public class Sector {
+public class SectorEntity {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
@@ -16,7 +22,12 @@ public class Sector {
 	@Column(name = "sname")
 	private String sectorName;
 
+	@Column(length = 1000)
 	private String description;
+
+	@OneToMany(mappedBy = "sector", cascade = CascadeType.ALL)
+	@JsonIgnore
+	private List<CompanyEntity> companies;
 
 	public long getId() {
 		return id;
@@ -42,8 +53,17 @@ public class Sector {
 		this.description = description;
 	}
 
-	public Sector() {
+	public List<CompanyEntity> getCompanies() {
+		return companies;
+	}
+
+	public void setCompanies(List<CompanyEntity> companies) {
+		this.companies = companies;
+	}
+
+	public SectorEntity() {
 		super();
+
 	}
 
 }
