@@ -1,9 +1,10 @@
 package com.project.stockmarketcharting.service.impl;
 
-import java.util.List;
+import java.util.Optional;
 
+import org.hibernate.ObjectNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Sort;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 
 import com.project.stockmarketcharting.dao.CompanyRepository;
@@ -23,18 +24,26 @@ public class CompanyServiceImpl implements CompanyService {
 
 	@Override
 	public CompanyEntity getCompanyById(Long companyId) {
-
-		return null;
+		Optional<CompanyEntity> company = companyRepository.findById(companyId);
+		if (!company.isPresent()) {
+			throw new ObjectNotFoundException(companyId, "Company");
+		}
+		return company.get();
 	}
 
 	@Override
 	public void deleteCompanyById(Long companyId) {
-
+		Optional<CompanyEntity> findById = companyRepository.findById(companyId);
+		if (!findById.isPresent()) {
+			throw new ObjectNotFoundException(companyId, "Company");
+		}
+		companyRepository.deleteById(companyId);
 	}
 
 	@Override
-	public List<CompanyEntity> getAllCompanies() {
-		return companyRepository.findAll(Sort.by(Sort.Direction.ASC, "companyName"));
+	public Page<CompanyEntity> getAllCompanies() {
+		return null;
+
 	}
 
 }

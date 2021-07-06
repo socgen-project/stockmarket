@@ -10,7 +10,6 @@ import org.springframework.security.authentication.DisabledException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -37,27 +36,20 @@ public class JwtAuthenticationController {
 
 	@PostMapping("/generate-token")
 	public ResponseEntity<Object> generateToken(@RequestBody JwtRequest jwtRequest) {
-		try {
-			authenticate(jwtRequest.getUsername(), jwtRequest.getPassword());
-		} catch (UsernameNotFoundException e) {
-			return ResponseEntity.notFound().build();
-		} catch (Exception e) {
-			return ResponseEntity.badRequest().body(e.getMessage());
-		}
-
+		authenticate(jwtRequest.getUsername(), jwtRequest.getPassword());
 		UserDetails userDetails = userDetailsService.loadUserByUsername(jwtRequest.getUsername());
 		String token = jwtUtil.generateToken(userDetails);
 		return ResponseEntity.ok(new JwtResponse(token));
 	}
 
-	public void authenticate(String username, String password) throws Exception {
+	public void authenticate(String username, String password) {
 
 		try {
 			authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(username, password));
 		} catch (DisabledException e) {
-			throw new Exception("USER_DISABLED ");
+			throw new DisabledException("USER_DISABLED ");
 		} catch (BadCredentialsException e) {
-			throw new Exception("INVALID_CREDENTIALS ");
+			throw new BadCredentialsException("INVALID_CREDENTIALS ");
 		}
 	}
 

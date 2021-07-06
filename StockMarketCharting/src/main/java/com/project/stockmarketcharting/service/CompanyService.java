@@ -1,6 +1,6 @@
 package com.project.stockmarketcharting.service;
 
-import java.util.List;
+import org.springframework.data.domain.Page;
 
 import com.project.stockmarketcharting.entity.CompanyEntity;
 
@@ -12,5 +12,5 @@ public interface CompanyService {
 
 	public void deleteCompanyById(Long companyId);
 
-	public List<CompanyEntity> getAllCompanies();
+	public Page<CompanyEntity> getAllCompanies();
 }
