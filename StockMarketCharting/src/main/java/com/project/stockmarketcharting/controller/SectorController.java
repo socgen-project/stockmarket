@@ -2,7 +2,6 @@ package com.project.stockmarketcharting.controller;
 
 import java.util.List;
 
-import org.hibernate.ObjectNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -12,6 +11,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.project.stockmarketcharting.entity.SectorEntity;
@@ -20,6 +20,7 @@ import com.project.stockmarketcharting.service.impl.SectorServiceImpl;
 
 @RestController
 @CrossOrigin
+@RequestMapping("/admin")
 public class SectorController {
 
 	@Autowired
@@ -48,12 +49,7 @@ public class SectorController {
 
 	@DeleteMapping("/sector/{id}")
 	public ResponseEntity<String> deleteSector(@PathVariable("id") Long sectorId) {
-		try {
-			sectorService.deleteSector(sectorId);
-			return ResponseEntity.ok().body("Sector with Id : " + sectorId + " succesfully Deleted");
-		} catch (ObjectNotFoundException e) {
-			return ResponseEntity.notFound().build();
-		}
-
+		sectorService.deleteSector(sectorId);
+		return ResponseEntity.ok().body("Sector with Id : " + sectorId + " succesfully Deleted");
 	}
 }

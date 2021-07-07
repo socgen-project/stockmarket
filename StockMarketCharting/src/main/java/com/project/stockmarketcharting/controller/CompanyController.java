@@ -1,6 +1,7 @@
 package com.project.stockmarketcharting.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -9,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.project.stockmarketcharting.entity.CompanyEntity;
+import com.project.stockmarketcharting.exception.EntityAlreadyExistsException;
 import com.project.stockmarketcharting.service.impl.CompanyServiceImpl;
 
 @RestController
@@ -24,9 +26,9 @@ public class CompanyController {
 
 	}
 
-	@PostMapping("/company/add")
-	public ResponseEntity<Object> addCompany(@RequestBody CompanyEntity company) {
-		return null;
+	@PostMapping("/admin/company/add")
+	public ResponseEntity<Object> addCompany(@RequestBody CompanyEntity company) throws EntityAlreadyExistsException {
+		return ResponseEntity.status(HttpStatus.CREATED).body(companyService.createCompany(company));
 	}
 
 }

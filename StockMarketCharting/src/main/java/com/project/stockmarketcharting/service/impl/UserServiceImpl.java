@@ -1,6 +1,7 @@
 package com.project.stockmarketcharting.service.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import com.project.stockmarketcharting.dao.UserRepository;
@@ -15,7 +16,7 @@ public class UserServiceImpl implements UserService {
 	UserRepository userRepository;
 
 	@Override
-	public UserEntity createUser(UserEntity user) throws Exception {
+	public UserEntity createUser(UserEntity user) throws EntityAlreadyExistsException {
 		UserEntity existingUser = userRepository.findByUsername(user.getUsername());
 		if (existingUser != null) {
 			throw new EntityAlreadyExistsException("User");
@@ -27,19 +28,17 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public UserEntity getUser(String username) {
-		return userRepository.findByUsername(username);
+		UserEntity user = userRepository.findByUsername(username);
+		if (user == null) {
+			throw new UsernameNotFoundException(username);
+		}
+		return user;
 	}
 
 	@Override
-	public Boolean deleteUser(Long id) {
-		try {
-			userRepository.getById(id);
-			userRepository.deleteById(id);
-		} catch (Exception e) {
-			return false;
-		}
-		return true;
-
+	public void deleteUser(Long id) {
+		userRepository.getById(id);
+		userRepository.deleteById(id);
 	}
 
 }

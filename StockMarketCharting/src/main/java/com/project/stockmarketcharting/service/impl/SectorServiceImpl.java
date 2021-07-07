@@ -20,7 +20,7 @@ public class SectorServiceImpl implements SectorService {
 	private SectorRepository sectorRepository;
 
 	@Override
-	public SectorEntity createsector(SectorEntity sector) throws Exception {
+	public SectorEntity createsector(SectorEntity sector) throws EntityAlreadyExistsException {
 		SectorEntity findBysectorName = sectorRepository.findBysectorName(sector.getSectorName());
 		if (findBysectorName != null) {
 			throw new EntityAlreadyExistsException("Sector");

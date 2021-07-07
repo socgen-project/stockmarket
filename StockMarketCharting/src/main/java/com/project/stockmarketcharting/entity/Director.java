@@ -5,7 +5,6 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToOne;
 
 @Entity
 public class Director {
@@ -17,8 +16,7 @@ public class Director {
 
 	private String directorName;
 
-	@OneToOne
-	private CompanyEntity company;
+	private Long companyId;
 
 	public int getId() {
 		return id;
@@ -28,17 +26,19 @@ public class Director {
 		this.id = id;
 	}
 
+	public Long getCompanyId() {
+		return companyId;
+	}
+
+	public void setCompanyId(Long companyId) {
+		this.companyId = companyId;
+	}
+
 	public String getDirectorName() {
 		return directorName;
 	}
 
 	public void setDirectorName(String directorName) {
-		this.directorName = directorName;
-	}
-
-	public Director(int id, String directorName) {
-		super();
-		this.id = id;
 		this.directorName = directorName;
 	}
 

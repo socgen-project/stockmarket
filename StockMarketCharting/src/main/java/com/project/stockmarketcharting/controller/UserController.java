@@ -1,7 +1,6 @@
 package com.project.stockmarketcharting.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -28,35 +27,23 @@ public class UserController {
 	BCryptPasswordEncoder passwordEncoder;
 
 	@PostMapping("/")
-	public ResponseEntity<?> createUser(@RequestBody UserEntity user) throws Exception {
-		try {
-			user.setUserType("NORMAL");
-			user.setPassword(passwordEncoder.encode(user.getPassword()));
-			UserEntity createUser = userService.createUser(user);
-			return ResponseEntity.ok().body(createUser);
-
-		} catch (Exception e) {
-			return ResponseEntity.badRequest().body(e.getMessage());
-		}
+	public ResponseEntity<UserEntity> createUser(@RequestBody UserEntity user) throws Exception {
+		user.setUserType("NORMAL");
+		user.setPassword(passwordEncoder.encode(user.getPassword()));
+		UserEntity createUser = userService.createUser(user);
+		return ResponseEntity.ok().body(createUser);
 
 	}
 
 	@GetMapping("/{username}")
-	public ResponseEntity<?> getuser(@PathVariable("username") String username) {
+	public ResponseEntity<UserEntity> getuser(@PathVariable("username") String username) {
 		UserEntity user = userService.getUser(username);
-		if (user == null) {
-			return ResponseEntity.status(HttpStatus.NOT_FOUND).body("user cannot be found");
-		}
 		return ResponseEntity.ok(user);
 	}
 
 	@DeleteMapping("/{id}")
 	public ResponseEntity<String> deleteuser(@PathVariable("id") Long id) {
-		if (Boolean.TRUE.equals(userService.deleteUser(id))) {
-			return ResponseEntity.ok().body("User with id: " + id + " succesfully deleted");
-		} else {
-			return ResponseEntity.status(HttpStatus.NOT_FOUND).body("user with id : " + id + " could not be found");
-		}
+		return ResponseEntity.ok().body("User with id: " + id + " succesfully deleted");
 
 	}
 }

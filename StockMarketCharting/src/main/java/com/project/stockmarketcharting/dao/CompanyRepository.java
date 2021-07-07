@@ -8,4 +8,6 @@ import com.project.stockmarketcharting.entity.CompanyEntity;
 @Repository
 public interface CompanyRepository extends JpaRepository<CompanyEntity, Long> {
 
+	public CompanyEntity findBycompanyName(String companyName);
+
 }

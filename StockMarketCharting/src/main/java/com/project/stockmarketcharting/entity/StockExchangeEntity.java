@@ -1,14 +1,12 @@
 package com.project.stockmarketcharting.entity;
 
-import java.util.List;
-
+import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
-//@Entity
+@Entity
 @Table(name = "stock_exchange")
 public class StockExchangeEntity {
 
@@ -19,8 +17,8 @@ public class StockExchangeEntity {
 	private String brief;
 	private String contactAddress;
 
-	@ManyToMany()
-	private List<CompanyEntity> companies;
+//	@ManyToMany()
+//	private List<CompanyEntity> companies;
 
 	public long getId() {
 		return id;
