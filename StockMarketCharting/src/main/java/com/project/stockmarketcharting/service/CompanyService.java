@@ -1,6 +1,6 @@
 package com.project.stockmarketcharting.service;
 
-import org.springframework.data.domain.Page;
+import java.util.List;
 
 import com.project.stockmarketcharting.entity.CompanyEntity;
 import com.project.stockmarketcharting.exception.EntityAlreadyExistsException;
@@ -13,5 +13,5 @@ public interface CompanyService {
 
 	public void deleteCompanyById(Long companyId);
 
-	public Page<CompanyEntity> getAllCompanies();
+	public List<CompanyEntity> getAllCompanies();
 }

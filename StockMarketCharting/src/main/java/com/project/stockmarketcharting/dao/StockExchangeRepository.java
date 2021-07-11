@@ -7,5 +7,5 @@ import com.project.stockmarketcharting.entity.StockExchangeEntity;
 
 @Repository
 public interface StockExchangeRepository extends JpaRepository<StockExchangeEntity, Long> {
-
+	public StockExchangeEntity findBystockExchangeName(String stockExchangeName);
 }

@@ -26,7 +26,7 @@ public class SectorController {
 	@Autowired
 	private SectorServiceImpl sectorService;
 
-	@PostMapping("sector/add")
+	@PostMapping("sectors/add")
 	public ResponseEntity<Object> addSector(@RequestBody SectorEntity sector) {
 		try {
 			SectorEntity createdSector = sectorService.createsector(sector);
@@ -47,7 +47,7 @@ public class SectorController {
 		return ResponseEntity.ok(allSectors);
 	}
 
-	@DeleteMapping("/sector/{id}")
+	@DeleteMapping("/sectors/{id}")
 	public ResponseEntity<String> deleteSector(@PathVariable("id") Long sectorId) {
 		sectorService.deleteSector(sectorId);
 		return ResponseEntity.ok().body("Sector with Id : " + sectorId + " succesfully Deleted");

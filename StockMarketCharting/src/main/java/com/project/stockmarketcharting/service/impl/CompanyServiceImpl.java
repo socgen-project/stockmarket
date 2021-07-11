@@ -5,7 +5,6 @@ import java.util.Optional;
 
 import org.hibernate.ObjectNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 
 import com.project.stockmarketcharting.dao.CompanyRepository;
@@ -33,6 +32,7 @@ public class CompanyServiceImpl implements CompanyService {
 		List<Director> directors = company.getDirectors();
 		for (Director d : directors) {
 			directorRepository.save(d);
+
 		}
 		return companyRepository.save(company);
 	}
@@ -56,8 +56,8 @@ public class CompanyServiceImpl implements CompanyService {
 	}
 
 	@Override
-	public Page<CompanyEntity> getAllCompanies() {
-		return null;
+	public List<CompanyEntity> getAllCompanies() {
+		return companyRepository.findAll();
 
 	}
 

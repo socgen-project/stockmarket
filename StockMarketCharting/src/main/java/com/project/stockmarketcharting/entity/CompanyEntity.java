@@ -10,6 +10,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
@@ -27,7 +28,7 @@ public class CompanyEntity {
 	private float turnover;
 	private String ceo;
 
-	@OneToMany
+	@OneToMany()
 	@JoinColumn(name = "companyId")
 	private List<Director> directors;
 
@@ -37,8 +38,9 @@ public class CompanyEntity {
 	@Column(length = 2000)
 	private String description;
 
-//	@ManyToMany(cascade = CascadeType.ALL)
-//	private List<StockExchangeEntity> stockExchanges;
+	@ManyToMany(cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
+	@JoinColumn(name = "stockExchangeName")
+	private List<StockExchangeEntity> stockExchanges;
 
 	public long getId() {
 		return id;
@@ -94,6 +96,14 @@ public class CompanyEntity {
 
 	public void setDescription(String description) {
 		this.description = description;
+	}
+
+	public List<StockExchangeEntity> getStockExchanges() {
+		return stockExchanges;
+	}
+
+	public void setStockExchanges(List<StockExchangeEntity> stockExchanges) {
+		this.stockExchanges = stockExchanges;
 	}
 
 	public CompanyEntity() {

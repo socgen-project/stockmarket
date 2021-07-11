@@ -1,5 +1,6 @@
 package com.project.stockmarketcharting.entity;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -13,12 +14,11 @@ public class StockExchangeEntity {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private long id;
-	private String stockExchange;
+	private String stockExchangeName;
+
+	@Column(length = 1000)
 	private String brief;
 	private String contactAddress;
-
-//	@ManyToMany()
-//	private List<CompanyEntity> companies;
 
 	public long getId() {
 		return id;
@@ -28,12 +28,12 @@ public class StockExchangeEntity {
 		this.id = id;
 	}
 
-	public String getStockExchange() {
-		return stockExchange;
+	public String getStockExchangeName() {
+		return stockExchangeName;
 	}
 
-	public void setStockExchange(String stockExchange) {
-		this.stockExchange = stockExchange;
+	public void setStockExchangeName(String stockExchangeName) {
+		this.stockExchangeName = stockExchangeName;
 	}
 
 	public String getBrief() {
